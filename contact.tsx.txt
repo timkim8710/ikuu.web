@@ -1,0 +1,79 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { useForm } from 'react-hook-form';
+
+export const route = createFileRoute('/contact')({
+  component: ContactComponent,
+});
+
+interface ContactFormInput {
+  name: string;
+  email: string;
+  category: string;
+  message: string;
+}
+
+function ContactComponent() {
+  const { register, handleSubmit, reset } = useForm<ContactFormInput>();
+
+  const handleMessageDispatch = (data: ContactFormInput) => {
+    alert(`Thank you, ${data.name}. Your communications ticket concerning "${data.category}" has been sent successfully to the registry desk.`);
+    reset();
+  };
+
+  return (
+    <div className="flex flex-col grow">
+      <div className="bg-gradient-to-r from-ikuu-navy via-ikuu-blue to-ikuu-navy text-white py-14 text-center shadow-inner">
+        <h2 className="text-3xl font-black tracking-tight">Connect With Our Institutional Registry</h2>
+        <p className="text-slate-300 text-sm mt-1.5 font-medium">Direct processing desk pipelines for Admissions, Bursar, or general inquiries</p>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-12 w-full grow">
+        <div className="bg-white p-8 rounded-2xl shadow-xs border border-slate-200 space-y-6">
+          <h3 className="text-2xl font-extrabold text-ikuu-navy border-b border-slate-100 pb-4 mb-2 flex items-center gap-2">
+            <span className="w-2 h-6 bg-ikuu-gold rounded-full inline-block" />
+            Official Coordinates
+          </h3>
+          <div>
+            <h4 className="font-black text-xs text-slate-400 uppercase tracking-wider">Postal Mailbox</h4>
+            <p className="text-slate-800 font-bold mt-1 text-base leading-relaxed">The Principal,<br />Ikuu Boys' High School<br />P.O. Box 40 – 60400<br />Chuka, Kenya</p>
+          </div>
+          <div>
+            <h4 className="font-black text-xs text-slate-400 uppercase tracking-wider">Direct Registry Phone lines</h4>
+            <p className="text-slate-800 font-semibold mt-1.5 text-sm">📞 0739 902 196 (Principal Office Registry)</p>
+          </div>
+        </div>
+
+        <div className="bg-white p-8 rounded-2xl shadow-xs border border-slate-200">
+          <h3 className="text-2xl font-extrabold text-ikuu-navy border-b border-slate-100 pb-4 mb-6 flex items-center gap-2">
+            <span className="w-2 h-6 bg-ikuu-gold rounded-full inline-block" />
+            Submit Digital Enquiry
+          </h3>
+          <form onSubmit={handleSubmit(handleMessageDispatch)} className="space-y-4">
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">Full Name</label>
+              <input type="text" {...register('name', { required: true })} placeholder="David Mwangi" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-ikuu-navy" required />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">Email Address</label>
+              <input type="email" {...register('email', { required: true })} placeholder="name@domain.com" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-ikuu-navy" required />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">Inquiry Department Target</label>
+              <select {...register('category', { required: true })} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-ikuu-navy" required>
+                <option value="Admissions">Admissions & Transfers</option>
+                <option value="Procurement">Procurement & PPIP</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">Message Text</label>
+              <textarea rows={4} {...register('message', { required: true })} placeholder="Type message parameters here..." className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-ikuu-navy resize-none" required></textarea>
+            </div>
+            <button type="submit" className="w-full bg-ikuu-navy hover:bg-ikuu-blue text-white text-xs font-black py-3.5 px-4 rounded-lg border-b-4 border-ikuu-gold transition-colors uppercase tracking-wider">
+              Send Messaging Ticket
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}

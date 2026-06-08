@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ikuu-navy: #091c36;
+  --color-ikuu-blue: #0d2a52;
+  --color-ikuu-gold: #ffc72c;
+  --color-ikuu-gold-dark: #dca311;
+  
+  --animate-ticker: tickerMarquee 25s linear infinite;
+}
+
+@keyframes tickerMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* Custom layout global scrollbar formatting styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #0d2a52;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #091c36;
+}

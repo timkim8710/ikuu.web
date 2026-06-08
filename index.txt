@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ikuu Boys' High School - National Academic Center</title>
+    <!-- Core Application Custom Stylesheet Target Layout Link -->
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased">
+    <!-- Root Mounting Element Node Box for TanStack Start Application -->
+    <div id="app"></div>
+    <script type="module" src="/app/main.tsx"></script>
+  </body>
+</html>

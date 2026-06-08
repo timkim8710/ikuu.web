@@ -1,0 +1,112 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+
+export const route = createFileRoute('/admissions')({
+  component: AdmissionsComponent,
+});
+
+interface FeeConfig {
+  uniform: boolean;
+  caution: boolean;
+  welfare: boolean;
+}
+
+function AdmissionsComponent() {
+  const [grandTotal, setGrandTotal] = useState<number>(55554);
+  const { register, watch } = useForm<FeeConfig>({
+    defaultValues: { uniform: false, caution: true, welfare: false }
+  });
+
+  const watchFields = watch();
+
+  useEffect(() => {
+    let base = 53554;
+    if (watchFields.uniform) base += 8500;
+    if (watchFields.caution) base += 2000;
+    if (watchFields.welfare) base += 1500;
+    setGrandTotal(base);
+  }, [watchFields]);
+
+  return (
+    <div className="flex flex-col grow">
+      <div className="bg-gradient-to-r from-ikuu-navy via-ikuu-blue to-ikuu-navy text-white py-14 text-center shadow-inner">
+        <h2 className="text-3xl font-black tracking-tight">Student Enrollment & Tuition Registry</h2>
+        <p className="text-slate-300 text-sm mt-1.5 font-medium">Official clearance pathways and annual fee matrix configurations</p>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-8 w-full grow">
+        <div className="space-y-8">
+          <section className="bg-white p-8 rounded-2xl shadow-xs border border-slate-200">
+            <h3 className="text-2xl font-extrabold text-ikuu-navy mb-6 flex items-center gap-2">
+              <span className="w-2 h-6 bg-ikuu-gold rounded-full inline-block" />
+              The Onboarding Sequence
+            </h3>
+            <div className="border-l-4 border-ikuu-gold pl-6 space-y-6">
+              <div>
+                <h4 className="font-extrabold text-slate-800 text-base">Step 1: Document Clearance</h4>
+                <p className="text-sm text-slate-500 font-medium mt-1">Present your original KCPE result slip, NEMIS registration profile, and school leaving certificates.</p>
+              </div>
+              <div>
+                <h4 className="font-extrabold text-slate-800 text-base">Step 2: Medical Examination</h4>
+                <p className="text-sm text-slate-500 font-medium mt-1">Submit the filled medical history verification document signed and stamped by a registered health officer.</p>
+              </div>
+            </div>
+          </section>
+
+          <section className="bg-white p-8 rounded-2xl shadow-xs border border-slate-200">
+            <h3 className="text-2xl font-extrabold text-ikuu-navy mb-4 flex items-center gap-2">
+              <span className="w-2 h-6 bg-ikuu-gold rounded-full inline-block" />
+              Student Life Forum
+            </h3>
+            <div className="rounded-xl overflow-hidden border-2 border-slate-100 mb-4 max-h-60 shadow-md">
+              <img src="/stud.jpg" alt="Ikuu Boys High School Student Forum Activity" className="w-full h-full object-cover" />
+            </div>
+          </section>
+        </div>
+
+        <div>
+          <section className="bg-white p-8 rounded-2xl shadow-xs border-2 border-ikuu-navy">
+            <h3 className="text-2xl font-extrabold text-ikuu-navy mb-1">Fee Configuration Engine</h3>
+            <p className="text-xs text-slate-400 font-medium mb-6">Compute total structural fee balances below:</p>
+
+            <form className="space-y-4 bg-slate-50 p-6 rounded-xl border border-slate-200">
+              <div className="flex justify-between items-center pb-3 border-b border-slate-200">
+                <div>
+                  <span className="font-bold text-ikuu-navy block">Base National Tuition Fee</span>
+                  <span className="text-xs text-slate-400">Subsidized Ministry allocation minimum fees</span>
+                </div>
+                <span className="font-bold text-slate-700">Ksh 53,554</span>
+              </div>
+
+              <div className="flex justify-between items-center pb-3 border-b border-slate-200 gap-4">
+                <label htmlFor="uniform" className="cursor-pointer">
+                  <span className="font-bold text-slate-800 block">Add Full Uniform Set Kit</span>
+                </label>
+                <div className="flex items-center gap-3 shrink-0">
+                  <span className="text-xs font-bold text-slate-500">+ Ksh 8,500</span>
+                  <input type="checkbox" id="uniform" {...register('uniform')} className="w-5 h-5 accent-ikuu-navy cursor-pointer" />
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center pb-3 border-b border-slate-200 gap-4">
+                <label htmlFor="caution" className="cursor-pointer">
+                  <span className="font-bold text-slate-800 block">Caution Money Deposit</span>
+                </label>
+                <div className="flex items-center gap-3 shrink-0">
+                  <span className="text-xs font-bold text-slate-500">+ Ksh 2,000</span>
+                  <input type="checkbox" id="caution" {...register('caution')} className="w-5 h-5 accent-ikuu-navy cursor-pointer" />
+                </div>
+              </div>
+
+              <div className="mt-6 bg-ikuu-navy text-white p-6 rounded-xl text-center shadow-lg border-b-4 border-ikuu-gold">
+                <span className="text-xs uppercase tracking-widest text-slate-300 font-black block">Estimated Annual Balance Due</span>
+                <span className="text-3xl font-black text-ikuu-gold block mt-1">Ksh {grandTotal.toLocaleString()}</span>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
